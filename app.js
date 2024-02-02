@@ -3,13 +3,11 @@ const app = express();
 
 // Landing Page
 app.get('/', (req, res) => {
-  res.send('Landing Page');
+  res.send('Landing Page/API Documentation');
 });
 
-// Registration routes
-app.get('/api/v1/sessions', (req, res) => {
-  res.send('Hello from Users Route');
-});
+// Registration/Sign-in routes
+app.use('/api/v1/sessions', require('./routes/sessionRoutes'));
 
 //Tasks routes
 app.get('/api/v1/tasks', (req, res) => {
