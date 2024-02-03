@@ -10,9 +10,8 @@ app.get('/', (req, res) => {
 app.use('/api/v1/sessions', require('./routes/sessionRoutes'));
 
 //Tasks routes
-app.get('/api/v1/tasks', (req, res) => {
-  res.send('These are your tasks routes');
-});
+app.use('/api/v1/tasks', require('./routes/taskRoutes'));
+
 const port = process.env.PORT || 3000;
 
 const start = async () => {
