@@ -6,6 +6,8 @@ const app = express();
 // connectDB
 const connectDB = require('./db/connect');
 
+app.use(express.json());
+
 // Landing Page
 app.get('/', (req, res) => {
   res.send('Landing Page/API Documentation');
