@@ -17,8 +17,11 @@ app.get('/', (req, res) => {
 // Registration/Sign-in routes
 app.use('/api/v1/sessions', require('./routes/sessionRoutes'));
 
+// user authentication
+const authenticateUser = require('./middleware/authentication');
+
 //Tasks routes
-app.use('/api/v1/tasks', require('./routes/taskRoutes'));
+app.use('/api/v1/tasks', authenticateUser, require('./routes/taskRoutes'));
 
 // Error handlers
 app.use(require('./middleware/not-found'));
