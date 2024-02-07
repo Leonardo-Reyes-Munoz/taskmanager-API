@@ -9,6 +9,6 @@ const {
 } = require('../controllers/sessionControllers');
 
 router.route('/register').post(registerUser);
-router.route('/logon').get(authenticateUser, getUserProfile);
+router.route('/logon').get(getUserProfile);
 
 module.exports = router;

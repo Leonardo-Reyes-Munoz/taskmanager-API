@@ -23,13 +23,13 @@ const getUserProfile = async (req, res) => {
     throw new Error('Invalid credentials');
   }
 
-  const isPasswordCorrect = await (user.password === password);
-
+  const isPasswordCorrect = await user.comparePassword(password);
   if (!isPasswordCorrect) {
     throw new Error('Invalid credentials');
   }
 
-  res.status(200).json({ user: { name: user.name } });
+  const token = user.createJWT();
+  res.status(200).json({ user: { name: user.name }, token });
 };
 
 module.exports = {
