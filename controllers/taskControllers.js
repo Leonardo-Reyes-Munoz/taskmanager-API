@@ -13,9 +13,39 @@ const createTask = async (req, res) => {
   res.status(200).send(task);
 };
 
-const getTask = async (req, res) => {};
+const getTask = async (req, res) => {
+  const {
+    user: { userId },
+    params: { id: taskId },
+  } = req;
 
-const updateTask = async (req, res) => {};
+  const task = await Task.findOne({ _id: taskId, createdBy: userId });
+
+  res.status(200).json({ task });
+};
+
+const updateTask = async (req, res) => {
+  const {
+    user: { userId },
+    params: { id: taskId },
+    body: { title },
+  } = req;
+
+  if (title.trim() === 0) {
+    throw new Error('Task title cannot be blank');
+  }
+
+  const task = await Task.findOneAndUpdate(
+    {
+      _id: taskId,
+      createdBy: userId,
+    },
+    req.body,
+    { new: true, runValidators: true }
+  );
+
+  res.status(200).json({ task });
+};
 
 const deleteTask = async (req, res) => {};
 
