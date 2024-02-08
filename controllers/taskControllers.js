@@ -1,22 +1,12 @@
-const getAllTasks = async (req, res) => {
-  res.send('Get all Tasks Route.');
-};
+const getAllTasks = async (req, res) => {};
 
-const createTask = async (req, res) => {
-  res.send('Create task route');
-};
+const createTask = async (req, res) => {};
 
-const getTask = async (req, res) => {
-  res.send('Get single task');
-};
+const getTask = async (req, res) => {};
 
-const updateTask = async (req, res) => {
-  res.send('Update Task');
-};
+const updateTask = async (req, res) => {};
 
-const deleteTask = async (req, res) => {
-  res.send('Delete Task');
-};
+const deleteTask = async (req, res) => {};
 
 module.exports = {
   getAllTasks,

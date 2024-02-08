@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { TaskSchema } = require('./Task');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -34,8 +33,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     minlength: 3,
   },
-  groups: [mongoose.ObjectId],
-  children: [TaskSchema],
 });
 
 UserSchema.pre('save', async function () {
