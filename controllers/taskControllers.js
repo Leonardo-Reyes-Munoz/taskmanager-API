@@ -21,6 +21,10 @@ const getTask = async (req, res) => {
 
   const task = await Task.findOne({ _id: taskId, createdBy: userId });
 
+  if (!task) {
+    throw new Error(`No task with id ${taskId}`);
+  }
+
   res.status(200).json({ task });
 };
 
@@ -44,10 +48,30 @@ const updateTask = async (req, res) => {
     { new: true, runValidators: true }
   );
 
+  if (!task) {
+    throw new Error(`No task with id ${taskId}`);
+  }
+
   res.status(200).json({ task });
 };
 
-const deleteTask = async (req, res) => {};
+const deleteTask = async (req, res) => {
+  const {
+    user: { userId },
+    params: { id: taskId },
+  } = req;
+
+  const task = await Task.findOneAndDelete({
+    _id: taskId,
+    createdBy: userId,
+  });
+
+  if (!task) {
+    throw new Error(`No task with id ${taskId}`);
+  }
+
+  res.status(200).send(`Success removing ${taskId}`);
+};
 
 module.exports = {
   getAllTasks,
