@@ -1,3 +1,8 @@
-const notFound = (req, res) => res.status(400).send('Route does not exist');
+const { StatusCodes } = require('http-status-codes');
+
+const notFound = (req, res) =>
+  res
+    .status(StatusCodes.NOT_FOUND)
+    .send(`That page (${req.url}) was not found`);
 
 module.exports = notFound;
