@@ -19,6 +19,11 @@ const TaskSchema = new mongoose.Schema(
       ref: 'User',
       required: [true, 'Please provide user'],
     },
+    groups: String,
+    priorityLevel: {
+      type: String,
+      enum: ['high', 'medium', 'low'],
+    },
   },
   { timestamps: true }
 );
