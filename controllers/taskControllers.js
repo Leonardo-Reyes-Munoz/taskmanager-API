@@ -11,6 +11,7 @@ const getAllTasks = async (req, res) => {
 
 const createTask = async (req, res) => {
   req.body.createdBy = req.user.userId;
+  console.log(req.body);
   const task = await Task.create(req.body);
   res.status(StatusCodes.CREATED).send(task);
 };
