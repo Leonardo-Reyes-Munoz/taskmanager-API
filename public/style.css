@@ -1,0 +1,46 @@
+/* || IMPORTED GOOGLE ICONS */
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+body {
+  background-color: #ff8e2b;
+}
+
+.banner {
+  color: #5b5851;
+  color: whitesmoke;
+  position: fixed;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.title {
+  font-family: 'Sriracha', cursive;
+  font-size: 2.5rem;
+}
+
+.logo {
+  color: #15815f;
+  transform: scale(1.5);
+  vertical-align: center;
+}
+
+.documentation {
+  text-align: center;
+  font-size: 1.25rem;
+}
+
+a {
+  color: #2185d0;
+}
+
+a:visited {
+  color: #2185d0;
+}
+
+a:hover {
+  color: #15815f;
+}
