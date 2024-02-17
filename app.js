@@ -25,10 +25,17 @@ app.use(helmet());
 app.use(cors());
 app.use(xss());
 
+// Swagger
+const swaggerUI = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./swagger.yaml');
+
 // Landing Page
 app.get('/', (req, res) => {
-  res.send('Landing Page/API Documentation');
+  res.send('<h1>Task-Tackler</h1><a  href="api-docs">Documentation</a>');
 });
+
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 // Registration/Sign-in routes
 app.use('/api/v1/sessions', require('./routes/sessionRoutes'));

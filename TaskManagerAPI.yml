@@ -1,0 +1,248 @@
+openapi: 3.0.0
+info:
+  title: Task-Manager-API
+  contact: {}
+  version: '1.0'
+servers:
+  - url: https://tasktacklerapi.onrender.com/api/v1
+    variables: {}
+paths:
+  /sessions/register:
+    post:
+      description: This is a POST request is used for to register user. Request submits JSON data including name, email, and password.
+      tags:
+        - Auth
+      summary: Register User
+      operationId: RegisterUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/RegisterUserRequest'
+                - example:
+                    name: test
+                    email: test@example.com
+                    password: secret
+            example:
+              name: test
+              email: test@example.com
+              password: secret
+        required: true
+      responses:
+        '200':
+          description: 'Successful registration'
+          headers: {}
+      deprecated: false
+      security: []
+  /sessions/logon:
+    post:
+      description: This is a POST request used for user logon. The request body should
+        contain user credentials such as email and password. A successful response
+        returns a token for authenticated sessions/
+      tags:
+        - Auth
+      summary: Login User
+      operationId: LoginUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/LoginUserRequest'
+                - example:
+                    email: test@example.com
+                    password: secret
+            example:
+              email: test@example.com
+              password: secret
+        required: true
+      responses:
+        '200':
+          description: 'Successful user login.'
+          headers: {}
+      deprecated: false
+      security: []
+  /tasks:
+    post:
+      tags:
+        - Tasks
+      summary: Create Task
+      operationId: CreateTask
+      parameters: []
+      requestBody:
+        description: 'This is a POST request to create a new task. User must be logged into the Task-Manager. A reference will be added upon task creation which will associate the user to the specific task.'
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/CreateTaskRequest'
+                - example:
+                    title: Do laundry
+                    isCompleted: false
+                    dueDate: "2022-01-23"
+            example:
+              title: Do laundry
+              isCompleted: false
+              dueDate: "2022-01-23"
+              priorityLevel: high
+        required: true
+      responses:
+        '200':
+          description: 'Task successfully created.'
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    get:
+      tags:
+        - Tasks
+      summary: Get All Tasks
+      operationId: GetAllTasks
+      parameters: []
+      responses:
+        '200':
+          description: "Successful retrieval of user's task"
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /tasks/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The task ID
+
+    patch:
+      tags:
+        - Tasks
+      summary: Update Task
+      operationId: UpdateTask
+      parameters: []
+      requestBody:
+        description: 'Request body must include a task title. Additional attributes, such as isCompleted, dueDate, and priorityLevel, are optional.'
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/UpdateTaskRequest'
+                - example:
+                    title: Do laundry
+                    isCompleted: false
+                    dueDate: "2022-01-23"
+                    priorityLevel: high
+            example:
+              title: Do laundry
+              isCompleted: false
+              dueDate: "2022-01-23"
+              priorityLevel: high
+        required: true
+      responses:
+        '200':
+          description: 'Successful task update.'
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    delete:
+      tags:
+        - Tasks
+      summary: Delete Job
+      operationId: DeleteJob
+      parameters: []
+      responses:
+        '200':
+          description: 'Task successfully deteled.'
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+components:
+  schemas:
+    RegisterUserRequest:
+      title: RegisterUserRequest
+      required:
+        - name
+        - email
+        - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: test
+        email: test@example.com
+        password: secret
+    LoginUserRequest:
+      title: LoginUserRequest
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: test@example.com
+        password: secret
+    CreateTaskRequest:
+      title: CreateTaskRequest
+      required:
+        - title
+      type: object
+      properties:
+        title:
+          type: string
+        isCompleted:
+          type: boolean
+        dueDate:
+          type: string
+        priorityLevel:
+          type: string
+      example:
+        title: Do laundry
+        isCompleted: false
+        dueDate: "2022-01-23"
+        priorityLevel: low
+    UpdateTaskRequest:
+      title: UpdateTaskRequest
+      required:
+        - title
+      type: object
+      properties:
+        title:
+          type: string
+        isCompleted:
+          type: boolean
+        dueDate:
+          type: string
+        priorityLevel:
+          type: string
+      example:
+        title: Do laundry
+        isCompleted: false
+        dueDate: "2022-01-23"
+        priorityLevel: Low
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+  - name: Auth
+    description: 'User registration and authentication routes.'
+  - name: Tasks
+    description: 'Task CRUD operations'
