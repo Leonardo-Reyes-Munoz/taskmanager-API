@@ -32,13 +32,6 @@ const swaggerDocument = YAML.load('./swagger.yaml');
 
 app.use(express.static('public'));
 
-// Landing Page
-// app.get('/', (req, res) => {
-//   res.send(
-//     '<h1>Task-Tackler</h1><a  href="api-docs">Documentation via SwaggerUI</a>'
-//   );
-// });
-
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '/public/index.html'));
 });
