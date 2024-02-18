@@ -39,10 +39,7 @@ paths:
       security: []
   /sessions/logon:
     post:
-      description:
-        This is a POST request used for user logon. The request body should
-        contain user credentials such as email and password. A successful response
-        returns a token for authenticated sessions/
+      description: 'This is a POST request used for user logon. The request body should contain user credentials such as email and password. A successful response returns a token for authenticated sessions.'
       tags:
         - Auth
       summary: Login User
