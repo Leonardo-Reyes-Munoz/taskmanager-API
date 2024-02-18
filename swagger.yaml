@@ -9,7 +9,7 @@ servers:
 paths:
   /sessions/register:
     post:
-      description: This is a POST request is used for to register user. Request submits JSON data including name, email, and password.
+      description: This POST request is used to register a user. Request submits JSON data which should include name, email, and password.
       tags:
         - Auth
       summary: Register User
@@ -39,7 +39,7 @@ paths:
       security: []
   /sessions/logon:
     post:
-      description: 'This is a POST request used for user logon. The request body should contain user credentials such as email and password. A successful response returns a token for authenticated sessions.'
+      description: 'This POST request is used for user logon. The user must be a registered user. The request body should contain user credentials which include email and password. A successful response returns a token for authenticated sessions.'
       tags:
         - Auth
       summary: Login User
@@ -69,11 +69,11 @@ paths:
     post:
       tags:
         - Tasks
-      summary: Create Task
+      summary: This POST request is used to create a new task.
       operationId: CreateTask
       parameters: []
       requestBody:
-        description: 'This is a POST request to create a new task. User must be logged into the Task-Manager. A reference will be added upon task creation which will associate the user to the specific task.'
+        description: 'Request body must include a task title. Additional attributes, such as isCompleted, dueDate, and priorityLevel, are optional.'
         content:
           application/json:
             schema:
@@ -99,12 +99,12 @@ paths:
     get:
       tags:
         - Tasks
-      summary: Get All Tasks
+      summary: Get all task associated to user.
       operationId: GetAllTasks
       parameters: []
       responses:
         '200':
-          description: "Successful retrieval of user's task"
+          description: "Successful retrieval of user's tasks."
           headers: {}
       deprecated: false
       security:
@@ -121,7 +121,7 @@ paths:
     patch:
       tags:
         - Tasks
-      summary: Update Task
+      summary: Update a specified task. The task must exist and the task id will need to be included within the request parameters.
       operationId: UpdateTask
       parameters: []
       requestBody:
@@ -152,7 +152,7 @@ paths:
     delete:
       tags:
         - Tasks
-      summary: Delete Task
+      summary: Delete a specified task. The task must exist and the task id will need to be included within the request parameters.
       operationId: DeleteTask
       parameters: []
       responses:
@@ -243,4 +243,4 @@ tags:
   - name: Auth
     description: 'User registration and authentication routes.'
   - name: Tasks
-    description: 'Task CRUD operations'
+    description: 'Task CRUD operations. Please note that all task routes are protected. You must include a valid token with your request. You can utilize the sessions/logon route to generate a token. Token should be added to the Authorized button above (Note: exclude the quotation marks) to access task routes.'
