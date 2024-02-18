@@ -9,7 +9,7 @@ servers:
 paths:
   /sessions/register:
     post:
-      description: This is a POST request is used for to register user. Request submits JSON data including name, email, and password. 
+      description: This is a POST request is used for to register user. Request submits JSON data including name, email, and password.
       tags:
         - Auth
       summary: Register User
@@ -39,7 +39,8 @@ paths:
       security: []
   /sessions/logon:
     post:
-      description: This is a POST request used for user logon. The request body should
+      description:
+        This is a POST request used for user logon. The request body should
         contain user credentials such as email and password. A successful response
         returns a token for authenticated sessions/
       tags:
@@ -84,12 +85,12 @@ paths:
                 - example:
                     title: Do laundry
                     isCompleted: false
-                    dueDate: "2022-01-23"
+                    dueDate: '2022-01-23'
             example:
               title: Do laundry
               isCompleted: false
-              dueDate: "2022-01-23"
-              priorityLevel: high 
+              dueDate: '2022-01-23'
+              priorityLevel: high
         required: true
       responses:
         '200':
@@ -136,12 +137,12 @@ paths:
                 - example:
                     title: Do laundry
                     isCompleted: false
-                    dueDate: "2022-01-23"
+                    dueDate: '2022-01-23'
                     priorityLevel: high
             example:
               title: Do laundry
               isCompleted: false
-              dueDate: "2022-01-23"
+              dueDate: '2022-01-23'
               priorityLevel: high
         required: true
       responses:
@@ -154,12 +155,12 @@ paths:
     delete:
       tags:
         - Tasks
-      summary: Delete Job
-      operationId: DeleteJob
+      summary: Delete Task
+      operationId: DeleteTask
       parameters: []
       responses:
         '200':
-          description: 'Task successfully deteled.'
+          description: 'Task successfully deleted.'
           headers: {}
       deprecated: false
       security:
@@ -215,7 +216,7 @@ components:
       example:
         title: Do laundry
         isCompleted: false
-        dueDate: "2022-01-23"
+        dueDate: '2022-01-23'
         priorityLevel: low
     UpdateTaskRequest:
       title: UpdateTaskRequest
@@ -234,7 +235,7 @@ components:
       example:
         title: Do laundry
         isCompleted: false
-        dueDate: "2022-01-23"
+        dueDate: '2022-01-23'
         priorityLevel: Low
   securitySchemes:
     bearer:
