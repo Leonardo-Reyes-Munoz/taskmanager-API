@@ -3,9 +3,7 @@ const { StatusCodes } = require('http-status-codes');
 
 const getAllLists = async (req, res) => {
   const listData = await TodoList.find({
-    authorizedUsers: {
-      $elemMatch: req.user.userId,
-    },
+    authorizedUsers: req.user.userId,
   }).sort('CreatedAt');
   res.status(StatusCodes.OK).json({ listData, count: listData.length });
 };

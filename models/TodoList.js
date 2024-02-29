@@ -1,25 +1,28 @@
 const mongoose = require('mongoose');
 const { TaskSchema } = require('./Task');
 
-const TodoLisSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: [true, 'TodoList name cannot be empty.'],
-    validate: {
-      validator: function (value) {
-        return value.trim().length > 0;
+const TodoLisSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: [true, 'TodoList name cannot be empty.'],
+      validate: {
+        validator: function (value) {
+          return value.trim().length > 0;
+        },
       },
+      maxLength: 50,
     },
-    maxLength: 50,
+    authorizedUsers: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
+    tasks: [TaskSchema],
+    color: String,
   },
-  authorizedUsers: [
-    {
-      type: mongoose.Types.ObjectId,
-      ref: 'User',
-    },
-  ],
-  tasks: [TaskSchema],
-  color: String,
-});
+  { timestamps: true }
+);
 
 module.exports = mongoose.model('TodoList', TodoLisSchema);
