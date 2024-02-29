@@ -60,13 +60,14 @@ const updateTask = async (req, res) => {
 const deleteTask = async (req, res) => {
   const {
     user: { userId },
-    params: { id: taskId },
+    params: { listId, taskId },
   } = req;
 
-  const task = await Task.findOneAndDelete({
-    _id: taskId,
-    createdBy: userId,
-  });
+  const task = await TodoList.findByIdAndUpdate(
+    { _id: listId, authorizedUsers: userId, 'tasks._id': taskId },
+    { $pull: { tasks: { _id: taskId } } },
+    { new: true }
+  );
 
   if (!task) {
     throw new NotFoundError(`No task with id ${taskId}`);
