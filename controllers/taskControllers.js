@@ -10,13 +10,10 @@ const createTask = async (req, res) => {
     body: { title },
   } = req;
 
-  console.log(req.params.listId);
-  console.log('Extracted list ID value:', listId);
-  console.log(req.body);
-
   if (title.trim() === 0) {
     throw new BadRequestError('Task title cannot be blank');
   }
+
   req.body.createdBy = req.user.userId;
 
   const updatedList = await TodoList.findOneAndUpdate(
@@ -31,20 +28,25 @@ const createTask = async (req, res) => {
 const updateTask = async (req, res) => {
   const {
     user: { userId },
-    params: { taskId, todoListId },
-    body: { title },
+    params: { listId, taskId },
+    body: { title, isCompleted, dueDate, groups, priorityLevel },
   } = req;
 
   if (title.trim() === 0) {
     throw new BadRequestError('Task title cannot be blank');
   }
 
-  const task = await Task.findOneAndUpdate(
+  const task = await TodoList.updateOne(
+    { _id: listId, authorizedUsers: userId, 'tasks._id': taskId },
     {
-      _id: taskId,
-      createdBy: userId,
+      $set: {
+        'tasks.$.title': title,
+        'tasks.$.isCompleted': isCompleted || false,
+        'tasks.$.dueDate': dueDate || null,
+        'tasks.$.groups': groups,
+        'tasks.$.priorityLevel': priorityLevel || 'low',
+      },
     },
-    req.body,
     { new: true, runValidators: true }
   );
 
