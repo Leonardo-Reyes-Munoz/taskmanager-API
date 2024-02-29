@@ -44,6 +44,9 @@ app.use('/api/v1/sessions', require('./routes/sessionRoutes'));
 // user authentication
 const authenticateUser = require('./middleware/authentication');
 
+//List Routes
+app.use('/api/v1/lists', authenticateUser, require('./routes/listRoutes'));
+
 //Tasks routes
 app.use('/api/v1/tasks', authenticateUser, require('./routes/taskRoutes'));
 

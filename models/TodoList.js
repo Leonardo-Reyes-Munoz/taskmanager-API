@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const TaskSchema = require('./Task');
+const { TaskSchema } = require('./Task');
 
 const TodoLisSchema = new mongoose.Schema({
   title: {
@@ -18,9 +18,8 @@ const TodoLisSchema = new mongoose.Schema({
       ref: 'User',
     },
   ],
-  tasks: {
-    type: [TaskSchema],
-  },
+  tasks: [TaskSchema],
+  color: String,
 });
 
 module.exports = mongoose.model('TodoList', TodoLisSchema);
