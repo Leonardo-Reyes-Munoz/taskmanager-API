@@ -1,18 +1,37 @@
 const Task = require('../models/Task');
+const TodoList = require('../models/TodoList');
 const { StatusCodes } = require('http-status-codes');
 const { BadRequestError, NotFoundError } = require('../errors');
 
 const createTask = async (req, res) => {
-  req.body.createdBy = req.user.userId;
+  const {
+    user: { userId },
+    params: { listId },
+    body: { title },
+  } = req;
+
+  console.log(req.params.listId);
+  console.log('Extracted list ID value:', listId);
   console.log(req.body);
-  const task = await Task.create(req.body);
-  res.status(StatusCodes.CREATED).send(task);
+
+  if (title.trim() === 0) {
+    throw new BadRequestError('Task title cannot be blank');
+  }
+  req.body.createdBy = req.user.userId;
+
+  const updatedList = await TodoList.findOneAndUpdate(
+    { _id: listId, authorizedUsers: userId },
+    { $push: { tasks: req.body } },
+    { new: true, runValidators: true }
+  );
+  console.log('Task successfully added:', updatedList);
+  res.status(StatusCodes.CREATED).send(updatedList);
 };
 
 const updateTask = async (req, res) => {
   const {
     user: { userId },
-    params: { id: taskId },
+    params: { taskId, todoListId },
     body: { title },
   } = req;
 
