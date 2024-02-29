@@ -15,7 +15,26 @@ const createList = async (req, res) => {
   res.status(StatusCodes.CREATED).send(list);
 };
 
+const deleteList = async (req, res) => {
+  const {
+    user: { userId },
+    params: { id: listId },
+  } = req;
+
+  const list = await TodoList.findOneAndDelete({
+    _id: listId,
+    authorizedUsers: userId,
+  });
+
+  if (!list) {
+    throw new NotFoundError(`No list with id ${listId}`);
+  }
+
+  res.status(StatusCodes.OK).send(`Success removing ${listId}`);
+};
+
 module.exports = {
   getAllLists,
   createList,
+  deleteList,
 };
